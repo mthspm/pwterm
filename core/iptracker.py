@@ -18,8 +18,16 @@ class Tracker(object):
     def get_ip_info(self, ip:int=None):
         """Get information about an IP address."""
         data = self.get_ip(ip)
+        to_del = ('flag', 'emoji_flag', 'emoji_unicode')
+        for key in to_del:
+            del data[key]
         for key, value in data.items():
-            print(f"{key}: {value}")
+            if isinstance(value, dict):
+                print(f"{key}:")
+                for k, v in value.items():
+                    print(f"  {k}: {v}")
+            else:
+                print(f"{key}: {value}")
 
     @staticmethod
     def ping(ip:str, count:int):
